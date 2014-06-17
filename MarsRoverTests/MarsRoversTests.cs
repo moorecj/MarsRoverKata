@@ -20,5 +20,38 @@ namespace MarsRoverTests
             Assert.That(rover, Is.Not.Null);
         }
 
+        [Test]
+        public void TheRoverShouldTakeAnInitialStartingPointAndADirection()
+        {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
+
+            char direction = 'N';
+
+            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction );
+
+            Assert.That(rover, Is.Not.Null);
+
+        }
+
+        [Test]
+        public void RoverShouldReturnItsCoordinates()
+        {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
+
+            char direction = 'N';
+
+            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+
+            rover.GetXCoordinate();
+            rover.GetYCoordinate();
+
+
+            Assert.That(rover.GetXCoordinate(), Is.EqualTo(0));
+            Assert.That(rover.GetYCoordinate(), Is.EqualTo(0));
+
+        }
+
     }
 }
