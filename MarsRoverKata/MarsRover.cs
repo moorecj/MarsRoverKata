@@ -39,5 +39,14 @@ namespace MarsRoverKata
         {
             return (this.y);
         }
+
+        public void Command( char[] command )
+        {
+            if(command[0] ==  'f')
+            {
+                if (direction == 'N')
+                    ++y;
+            }
+        }
     }
 }
