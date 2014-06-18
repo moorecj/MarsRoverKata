@@ -72,7 +72,7 @@ namespace MarsRoverTests
         }
 
         [Test]
-        public void AForwardCommandWhileFaceingNorthWillResultInOnePositiveMovementInTheYDirection()
+        public void ForwardCommandFaceingNorth_ResultsInOnePositiveMovementInTheYDirection()
         {
             int XCoordinate = 0;
             int YCoordinate = 0;
@@ -89,6 +89,86 @@ namespace MarsRoverTests
             Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate));
 
         }
+
+
+        [Test]
+        public void ForwardCommandFaceingSouth_ResultsInOneNegitiveMovementInTheYDirection()
+        {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
+
+            char direction = 'S';
+
+            char[] command = { 'f' };
+
+            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+
+            rover.Command(command);
+
+            Assert.That(rover.GetYCoordinate(), Is.EqualTo(YCoordinate-1));
+            Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate));
+
+        }
+
+        [Test]
+        public void ForwardCommandFaceingEast_ResultsInOnePositiveMovementInTheXDirection()
+        {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
+
+            char direction = 'E';
+
+            char[] command = { 'f' };
+
+            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+
+            rover.Command(command);
+
+            Assert.That(rover.GetYCoordinate(), Is.EqualTo(YCoordinate));
+            Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate+1));
+
+        }
+
+        [Test]
+        public void ForwardCommandFaceingWest_ResultsInOneNegitiveMovementInTheXDirection()
+        {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
+
+            char direction = 'W';
+
+            char[] command = { 'f' };
+
+            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+
+            rover.Command(command);
+
+            Assert.That(rover.GetYCoordinate(), Is.EqualTo(YCoordinate));
+            Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate-1));
+
+        }
+
+        [Test]
+        public void BackwardCommandFaceingNorth_ResultsInOneNegitiveMovementInTheYDirection()
+        {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
+
+            char direction = 'W';
+
+            char[] command = { 'f' };
+
+            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+
+            rover.Command(command);
+
+            Assert.That(rover.GetYCoordinate(), Is.EqualTo(YCoordinate - 1));
+            Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate));
+
+        }
+
+
+      
 
         
 

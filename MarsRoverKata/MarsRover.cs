@@ -44,9 +44,30 @@ namespace MarsRoverKata
         {
             if(command[0] ==  'f')
             {
-                if (direction == 'N')
+
+                switch(direction)
+                {
+                    case 'N':
                     ++y;
+                    break;
+
+                    case 'S':
+                    --y;
+                    break;
+
+                    case 'E':
+                    ++x;
+                    break;
+
+                    case 'W':
+                    --x;
+                    break;
+
+
+                }
+                      
             }
+
         }
     }
 }
