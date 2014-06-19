@@ -154,9 +154,9 @@ namespace MarsRoverTests
             int XCoordinate = 0;
             int YCoordinate = 0;
 
-            char direction = 'W';
+            char direction = 'N';
 
-            char[] command = { 'f' };
+            char[] command = { 'b' };
 
             MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
 
@@ -166,6 +166,25 @@ namespace MarsRoverTests
             Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate));
 
         }
+
+        [Test]
+        public void YouShouldBeAbleToGetTheCurrentDirectio()
+        {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
+
+            char direction = 'N';
+
+            char[] command = { 'b' };
+
+            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+
+            Assert.That(rover.GetCurrentDirection(), Is.EqualTo('N'));
+
+        }
+
+
+
 
 
       

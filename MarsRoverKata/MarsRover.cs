@@ -10,16 +10,34 @@ namespace MarsRoverKata
     public class MarsRover
     {
 
+        
+
         private int x;
         private int y;
-        private char direction;
 
-        public MarsRover( int x, int y, char direction )
+        enum Directions : byte { North = 0, East, South, West };
+
+        private Directions direction;
+
+        const byte DIRECTION_MASK = 4;
+
+
+        Dictionary<char, Directions> DirectionLookup = new Dictionary<char, Directions>()
+        {
+            {'N', Directions.North},
+            {'E', Directions.East},
+            {'S', Directions.South},
+            {'W', Directions.West}
+        };
+
+       
+
+        public MarsRover( int x, int y, char directionChar )
         {
 
             this.x = x;
             this.y = y;
-            this.direction = direction;
+            DirectionLookup.TryGetValue(directionChar, out direction);
 
         }
 
@@ -27,7 +45,8 @@ namespace MarsRoverKata
         {
             this.x = 0;
             this.y = 0;
-            this.direction = 'N';
+            this.direction = (byte)Directions.North;
+
         }
 
         public int GetXCoordinate()
@@ -42,32 +61,49 @@ namespace MarsRoverKata
 
         public void Command( char[] command )
         {
+
             if(command[0] ==  'f')
             {
-
-                switch(direction)
-                {
-                    case 'N':
-                    ++y;
-                    break;
-
-                    case 'S':
-                    --y;
-                    break;
-
-                    case 'E':
-                    ++x;
-                    break;
-
-                    case 'W':
-                    --x;
-                    break;
-
-
-                }
-                      
+                MoveSpaces(1);
+            }
+            else if( command[0] ==  'b' )
+            {
+                MoveSpaces(-1);
             }
 
+
         }
+
+        public char GetCurrentDirection()
+        {
+            return (DirectionLookup.FirstOrDefault(d => d.Value == direction).Key);
+        }
+
+        private void MoveSpaces(int numberOfSpaces)
+        {
+            switch (direction)
+            {
+                case Directions.North:
+                    y +=  numberOfSpaces;
+                    break;
+
+                case Directions.South:
+                    y -=  numberOfSpaces;;
+                    break;
+
+                case Directions.East:
+                    x +=  numberOfSpaces;
+                    break;
+
+                case Directions.West:
+                    x -=  numberOfSpaces;;
+                    break;
+
+            }
+        }
+
+
+
+   
     }
 }
