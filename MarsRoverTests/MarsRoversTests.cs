@@ -168,7 +168,7 @@ namespace MarsRoverTests
         }
 
         [Test]
-        public void YouShouldBeAbleToGetTheCurrentDirectio()
+        public void YouShouldBeAbleToGetTheCurrentDirection()
         {
             int XCoordinate = 0;
             int YCoordinate = 0;
@@ -182,6 +182,41 @@ namespace MarsRoverTests
             Assert.That(rover.GetCurrentDirection(), Is.EqualTo('N'));
 
         }
+
+        [Test]
+        public void FacingNorthATurnRight_ResultsInFacingEast()
+        {
+
+            char direction = 'N';
+
+            char[] command = { 'r'};
+
+            MarsRover rover = new MarsRover(0, 0, direction);
+
+            rover.Command(command);
+
+            Assert.That(rover.GetCurrentDirection(), Is.EqualTo('E'));
+
+        }
+
+        [Test]
+        public void FacingNorthATurnLeft_ResultsInFacingWest()
+        {
+
+            char direction = 'N';
+
+            char[] command = { 'l' };
+
+            MarsRover rover = new MarsRover(0, 0, direction);
+
+            rover.Command(command);
+
+            Assert.That(rover.GetCurrentDirection(), Is.EqualTo('W'));
+
+        }
+
+
+
 
 
 

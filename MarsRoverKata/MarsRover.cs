@@ -19,7 +19,7 @@ namespace MarsRoverKata
 
         private Directions direction;
 
-        const byte DIRECTION_MASK = 4;
+        const byte DIRECTION_MASK = 3;
 
 
         Dictionary<char, Directions> DirectionLookup = new Dictionary<char, Directions>()
@@ -59,16 +59,33 @@ namespace MarsRoverKata
             return (this.y);
         }
 
-        public void Command( char[] command )
+        public void Command( char[] commands )
         {
-
-            if(command[0] ==  'f')
+            foreach( char c in commands )
             {
-                MoveSpaces(1);
+                ImplementCommand( c );
             }
-            else if( command[0] ==  'b' )
+        }
+
+        private void ImplementCommand( char command)
+        {
+            switch( command )
             {
-                MoveSpaces(-1);
+                case 'f':
+                    MoveSpaces(1);
+                    break;
+
+                case 'b':
+                    MoveSpaces(-1);
+                    break;
+
+                case 'r':
+                    direction++;
+                    break;
+
+                case 'l':
+                    break;
+
             }
 
 
@@ -76,7 +93,7 @@ namespace MarsRoverKata
 
         public char GetCurrentDirection()
         {
-            return (DirectionLookup.FirstOrDefault(d => d.Value == direction).Key);
+            return (DirectionLookup.FirstOrDefault(d => d.Value ==(Directions)( (byte)direction & DIRECTION_MASK)).Key);
         }
 
         private void MoveSpaces(int numberOfSpaces)
