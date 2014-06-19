@@ -84,6 +84,7 @@ namespace MarsRoverKata
                     break;
 
                 case 'l':
+                    direction--;
                     break;
 
             }
