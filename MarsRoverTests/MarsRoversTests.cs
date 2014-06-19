@@ -215,6 +215,24 @@ namespace MarsRoverTests
 
         }
 
+        [Test]
+        public void FacingNorthFourLefts_ResultsInFacingNorth()
+        {
+
+            char direction = 'N';
+
+            char[] command = { 'l','l','l','l'};
+
+            MarsRover rover = new MarsRover(0, 0, direction);
+
+            rover.Command(command);
+
+            Assert.That(rover.GetCurrentDirection(), Is.EqualTo('N'));
+
+        }
+
+
+
 
 
 

@@ -10,8 +10,6 @@ namespace MarsRoverKata
     public class MarsRover
     {
 
-        
-
         private int x;
         private int y;
 
@@ -34,7 +32,6 @@ namespace MarsRoverKata
 
         public MarsRover( int x, int y, char directionChar )
         {
-
             this.x = x;
             this.y = y;
             DirectionLookup.TryGetValue(directionChar, out direction);
@@ -88,7 +85,6 @@ namespace MarsRoverKata
                     break;
 
             }
-
 
         }
 
