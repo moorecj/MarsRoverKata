@@ -95,7 +95,7 @@ namespace MarsRoverTests
         public void ForwardCommandFaceingSouth_ResultsInOneNegitiveMovementInTheYDirection()
         {
             int XCoordinate = 0;
-            int YCoordinate = 0;
+            int YCoordinate = 1;
 
             char direction = 'S';
 
@@ -132,7 +132,7 @@ namespace MarsRoverTests
         [Test]
         public void ForwardCommandFaceingWest_ResultsInOneNegitiveMovementInTheXDirection()
         {
-            int XCoordinate = 0;
+            int XCoordinate = 1;
             int YCoordinate = 0;
 
             char direction = 'W';
@@ -152,7 +152,7 @@ namespace MarsRoverTests
         public void BackwardCommandFaceingNorth_ResultsInOneNegitiveMovementInTheYDirection()
         {
             int XCoordinate = 0;
-            int YCoordinate = 0;
+            int YCoordinate = 1;
 
             char direction = 'N';
 
@@ -230,6 +230,42 @@ namespace MarsRoverTests
             Assert.That(rover.GetCurrentDirection(), Is.EqualTo('N'));
 
         }
+
+
+        [Test]
+        public void GoingOverTheEdge_ResultsInGoingToTheOtherSideOfTheGrid()
+        {
+
+            char direction = 'S';
+
+            char[] command = {'f'};
+
+            MarsRover rover = new MarsRover(0, 0, direction);
+
+            rover.Command(command);
+
+            Assert.That(rover.GetYCoordinate(), Is.EqualTo(MarsRover.WORLD_SIZE));
+            Assert.That(rover.GetXCoordinate(), Is.EqualTo(0));
+
+        }
+
+
+        [Test]
+        public void RunningIntoAnObstacleShouldBeReported()
+        {
+            char direction = 'E';
+
+            char[] command = { 'f', 'f', 'f', 'f' };
+
+            MarsRover rover = new MarsRover(0, 0, direction);
+
+            rover.Command(command);
+
+            Assert.That(rover.Command(command), Is.EqualTo(false));
+           
+
+        }
+
 
 
 
