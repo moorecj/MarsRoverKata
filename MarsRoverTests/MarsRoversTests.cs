@@ -7,6 +7,7 @@ using NUnit.Framework;
 using MarsRoverKata;
 
 
+
 namespace MarsRoverTests
 {
     [TestFixture]
@@ -15,7 +16,9 @@ namespace MarsRoverTests
         [Test]
         public void AMarsRoverExists()
         {
-            MarsRover rover = new MarsRover();
+            Point startingLoaction = new Point(0, 0);
+
+            MarsRover rover = new MarsRover(startingLoaction, 'N');
 
             Assert.That(rover, Is.Not.Null);
         }
@@ -23,47 +26,34 @@ namespace MarsRoverTests
         [Test]
         public void TheRoverShouldTakeAnInitialStartingPointAndADirection()
         {
-            int XCoordinate = 0;
-            int YCoordinate = 0;
+            Point startingLoaction = new Point(0, 0);
 
-            char direction = 'N';
-
-            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction );
+            MarsRover rover = new MarsRover(startingLoaction, 'N');
 
             Assert.That(rover, Is.Not.Null);
 
         }
 
         [Test]
-        public void RoverShouldReturnItsCoordinates()
+        public void RoverShouldReturnItsLocation()
         {
-            int XCoordinate = 0;
-            int YCoordinate = 0;
+            Point startingLoaction = new Point(0, 0);
 
-            char direction = 'N';
+            MarsRover rover = new MarsRover(startingLoaction, 'N');
 
-            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+            Assert.That(rover.GetCurrentLocation(), Is.EqualTo(startingLoaction));
 
-            rover.GetXCoordinate();
-            rover.GetYCoordinate();
-
-
-            Assert.That(rover.GetXCoordinate(), Is.EqualTo(0));
-            Assert.That(rover.GetYCoordinate(), Is.EqualTo(0));
 
         }
 
         [Test]
         public void TheRoverShouldTakeCommand()
         {
-            int XCoordinate = 0;
-            int YCoordinate = 0;
+            Point startingLoaction = new Point(0, 0);
 
-            char direction = 'N';
+            MarsRover rover = new MarsRover(startingLoaction, 'N');
 
             char[] command = { 'f' };
-
-            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
 
             rover.Command(command);
 
@@ -77,16 +67,17 @@ namespace MarsRoverTests
             int XCoordinate = 0;
             int YCoordinate = 0;
 
-            char direction = 'N';
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+
+            MarsRover rover = new MarsRover(startingLoaction, 'N');
 
             char[] command = { 'f' };
 
-            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
-
             rover.Command(command);
 
-            Assert.That(rover.GetYCoordinate(), Is.EqualTo(YCoordinate+1));
-            Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate));
+            Point expectedNewLocation = new Point(XCoordinate, YCoordinate + 1);
+
+            Assert.That(rover.GetCurrentLocation(), Is.EqualTo(expectedNewLocation));
 
         }
 
@@ -99,14 +90,17 @@ namespace MarsRoverTests
 
             char direction = 'S';
 
-            char[] command = { 'f' };
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
 
-            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
+
+            char[] command = { 'f' };
 
             rover.Command(command);
 
-            Assert.That(rover.GetYCoordinate(), Is.EqualTo(YCoordinate-1));
-            Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate));
+            Point expectedNewLocation = new Point(XCoordinate, YCoordinate - 1);
+
+            Assert.That(rover.GetCurrentLocation(), Is.EqualTo(expectedNewLocation));
 
         }
 
@@ -115,17 +109,18 @@ namespace MarsRoverTests
         {
             int XCoordinate = 0;
             int YCoordinate = 0;
-
             char direction = 'E';
+
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
 
             char[] command = { 'f' };
 
-            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
-
             rover.Command(command);
 
-            Assert.That(rover.GetYCoordinate(), Is.EqualTo(YCoordinate));
-            Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate+1));
+            Point expectedNewLocation = new Point(XCoordinate + 1, YCoordinate);
+
+            Assert.That(rover.GetCurrentLocation(), Is.EqualTo(expectedNewLocation));
 
         }
 
@@ -137,14 +132,16 @@ namespace MarsRoverTests
 
             char direction = 'W';
 
-            char[] command = { 'f' };
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
 
-            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+            char[] command = { 'f' };
 
             rover.Command(command);
 
-            Assert.That(rover.GetYCoordinate(), Is.EqualTo(YCoordinate));
-            Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate-1));
+            Point expectedNewLocation = new Point(XCoordinate - 1, YCoordinate);
+
+            Assert.That(rover.GetCurrentLocation(), Is.EqualTo(expectedNewLocation));
 
         }
 
@@ -158,12 +155,14 @@ namespace MarsRoverTests
 
             char[] command = { 'b' };
 
-            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
 
             rover.Command(command);
 
-            Assert.That(rover.GetYCoordinate(), Is.EqualTo(YCoordinate - 1));
-            Assert.That(rover.GetXCoordinate(), Is.EqualTo(XCoordinate));
+            Point expectedNewLocation = new Point(XCoordinate, YCoordinate - 1);
+
+            Assert.That(rover.GetCurrentLocation(), Is.EqualTo(expectedNewLocation));
 
         }
 
@@ -177,7 +176,8 @@ namespace MarsRoverTests
 
             char[] command = { 'b' };
 
-            MarsRover rover = new MarsRover(XCoordinate, YCoordinate, direction);
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
 
             Assert.That(rover.GetCurrentDirection(), Is.EqualTo('N'));
 
@@ -186,12 +186,15 @@ namespace MarsRoverTests
         [Test]
         public void FacingNorthATurnRight_ResultsInFacingEast()
         {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
 
             char direction = 'N';
 
-            char[] command = { 'r'};
+            char[] command = {'r'};
 
-            MarsRover rover = new MarsRover(0, 0, direction);
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
 
             rover.Command(command);
 
@@ -202,12 +205,15 @@ namespace MarsRoverTests
         [Test]
         public void FacingNorthATurnLeft_ResultsInFacingWest()
         {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
 
             char direction = 'N';
 
             char[] command = { 'l' };
 
-            MarsRover rover = new MarsRover(0, 0, direction);
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
 
             rover.Command(command);
 
@@ -218,12 +224,15 @@ namespace MarsRoverTests
         [Test]
         public void FacingNorthFourLefts_ResultsInFacingNorth()
         {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
 
             char direction = 'N';
 
             char[] command = { 'l','l','l','l'};
 
-            MarsRover rover = new MarsRover(0, 0, direction);
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
 
             rover.Command(command);
 
@@ -235,17 +244,21 @@ namespace MarsRoverTests
         [Test]
         public void GoingOverTheEdge_ResultsInGoingToTheOtherSideOfTheGrid()
         {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
 
             char direction = 'S';
 
             char[] command = {'f'};
 
-            MarsRover rover = new MarsRover(0, 0, direction);
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
 
             rover.Command(command);
 
-            Assert.That(rover.GetYCoordinate(), Is.EqualTo(MarsRover.WORLD_SIZE));
-            Assert.That(rover.GetXCoordinate(), Is.EqualTo(0));
+            Point expectedNewLocation = new Point(XCoordinate, MarsRover.WORLD_SIZE);
+
+            Assert.That(rover.GetCurrentLocation(), Is.EqualTo(expectedNewLocation));
 
         }
 
@@ -253,16 +266,47 @@ namespace MarsRoverTests
         [Test]
         public void RunningIntoAnObstacleShouldBeReported()
         {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
+
             char direction = 'E';
 
             char[] command = { 'f', 'f', 'f', 'f' };
 
-            MarsRover rover = new MarsRover(0, 0, direction);
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction);
 
             rover.Command(command);
 
-            Assert.That(rover.Command(command), Is.EqualTo(false));
+            Assert.That(rover.HitObstacle(), Is.EqualTo(true));
            
+
+        }
+
+        [Test]
+        public void RunningIntoAnObstacleShouldStopTheRoverAtTheLocationBeforeTheObstacle()
+        {
+            int XCoordinate = 0;
+            int YCoordinate = 0;
+
+            char direction = 'E';
+
+            char[] command = { 'f', 'f', 'f', 'f' };
+
+            Point obstacle = new Point(3, 0);
+
+            List<Point> obstacles = new List<Point>();
+
+            obstacles.Add(obstacle);
+
+            Point startingLoaction = new Point(XCoordinate, YCoordinate);
+            MarsRover rover = new MarsRover(startingLoaction, direction, obstacles);
+
+            rover.Command(command);
+
+            Point expectedNewLocation = new Point(2,0);
+
+            Assert.That(rover.GetCurrentLocation(), Is.EqualTo(expectedNewLocation));
 
         }
 

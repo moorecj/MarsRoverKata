@@ -19,8 +19,9 @@ namespace MarsRoverKata
         private const byte DIRECTION_MASK = 3;
         public const int WORLD_SIZE = 31;
 
-        List<Point> Obstacles = new List<Point>{ new Point(0, 3)};
+        bool ObstacleHitStatus;
 
+        List<Point> Obstacles;
 
         Dictionary<char, Directions> DirectionLookup = new Dictionary<char, Directions>()
         {
@@ -30,33 +31,64 @@ namespace MarsRoverKata
             {'W', Directions.West}
         };
 
-        public MarsRover( int x, int y, char directionChar )
+        public MarsRover( Point startingPoint, char directionChar )
         {
-            marsRoverLocation = new Point(x, y);
+            marsRoverLocation = startingPoint;
 
             DirectionLookup.TryGetValue(directionChar, out direction);
 
+            ObstacleHitStatus = false;
+
+            Obstacles = new List<Point>();
+
         }
 
-        public int GetXCoordinate()
+        public MarsRover( Point startingPoint, char directionChar, List<Point> Obstacles)
         {
-            return ((marsRoverLocation.GetXCoordinate()) & WORLD_SIZE);
+            marsRoverLocation = startingPoint;
+
+            DirectionLookup.TryGetValue(directionChar, out direction);
+
+            this.Obstacles = Obstacles;
+
+            ObstacleHitStatus = false;
+
         }
 
-        public int GetYCoordinate()
+        public Point GetCurrentLocation()
         {
-            return ((marsRoverLocation.GetYCoordinate()) & WORLD_SIZE);
+            return (marsRoverLocation);
         }
 
         public void Command( char[] commands )
         {
+            
             foreach( char c in commands )
             {
                 Point oldLocation = new Point(marsRoverLocation.GetXCoordinate(), marsRoverLocation.GetYCoordinate());    
                 ImplementCommand( c );
-                
 
+                ObstacleHitStatus = true;
+
+                foreach(Point obstacleLocation in Obstacles)
+                {
+                    if(marsRoverLocation == obstacleLocation)
+                    {
+                        marsRoverLocation = oldLocation;
+                        ObstacleHitStatus = true;
+                        break;
+                    }
+
+                    if (ObstacleHitStatus == true)
+                        break;
+                    
+                } 
             }
+        }
+
+        public bool HitObstacle()
+        {
+            return (ObstacleHitStatus);
         }
 
         private void ImplementCommand( char command)
@@ -64,11 +96,11 @@ namespace MarsRoverKata
             switch( command )
             {
                 case 'f':
-                    MoveSpaces(1);
+                    MoveSpaces(1, marsRoverLocation);
                     break;
 
                 case 'b':
-                    MoveSpaces(-1);
+                    MoveSpaces(-1, marsRoverLocation);
                     break;
 
                 case 'r':

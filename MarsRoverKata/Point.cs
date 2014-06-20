@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MarsRoverKata
 {
-    class Point : IEquatable<Point>
+    public class Point : IEquatable<Point>
     {
         private int x;
         private int y;
