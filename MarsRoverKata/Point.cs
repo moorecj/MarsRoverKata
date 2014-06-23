@@ -11,6 +11,8 @@ namespace MarsRoverKata
         private int x;
         private int y;
 
+        private const int WORLD_SIZE = 32;
+
 
         public Point(int x, int y)
         {
@@ -20,12 +22,12 @@ namespace MarsRoverKata
         
         public int GetXCoordinate()
         {
-            return(this.x);
+            return((this.x) & (WORLD_SIZE-1));
         }
 
         public int GetYCoordinate()
         {
-            return(this.y);
+            return ((this.y) & (WORLD_SIZE - 1));
         }
 
         public void MoveX( int spaces )
